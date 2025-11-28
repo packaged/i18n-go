@@ -14,6 +14,14 @@ func NewCatalog(defaultLang string, defaultTrans Translator) *Catalog {
 	}}
 }
 
+func (c *Catalog) SupportedLanguages() []string {
+	var languageCodes []string
+	for lang := range c.Languages {
+		languageCodes = append(languageCodes, lang)
+	}
+	return languageCodes
+}
+
 func (c *Catalog) AddLanguage(language string, translator Translator) {
 	c.Languages[language] = translator
 }
