@@ -1,10 +1,5 @@
 package translate
 
-import (
-	"fmt"
-	"strings"
-)
-
 // entry represents a translation record that can contain singular and plural forms.
 type entry struct {
 	Singular string
@@ -42,11 +37,7 @@ func (m *Map) Translate(key string) string {
 }
 
 func (m *Map) TranslateWith(key string, args map[string]interface{}) string {
-	original := m.translations[key].Singular
-	for k, v := range args {
-		original = strings.ReplaceAll(original, "{"+k+"}", fmt.Sprintf("%v", v))
-	}
-	return original
+	return Replacements(m.translations[key].Singular, args)
 }
 
 // TranslatePlural returns the singular form when number==1, otherwise the plural form.
@@ -57,15 +48,11 @@ func (m *Map) TranslatePlural(key string, number int64, args map[string]interfac
 	if number != 1 && e.Plural != "" {
 		original = ENPlural(e.Plural, number)
 	}
-
 	if args == nil {
 		args = map[string]interface{}{}
 	}
 	if _, ok := args["qty"]; !ok {
 		args["qty"] = number
 	}
-	for k, v := range args {
-		original = strings.ReplaceAll(original, "{"+k+"}", fmt.Sprintf("%v", v))
-	}
-	return original
+	return Replacements(original, args)
 }
