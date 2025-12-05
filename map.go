@@ -19,6 +19,14 @@ func NewMap() *Map {
 	return &Map{translations: make(map[string]entry)}
 }
 
+func NewBasicMap(from map[string]string) *Map {
+	m := NewMap()
+	for k, v := range from {
+		m.Add(k, v)
+	}
+	return m
+}
+
 // Add registers a singular-only translation value for backward compatibility.
 func (m *Map) Add(key, value string) {
 	m.translations[key] = entry{Singular: value}
