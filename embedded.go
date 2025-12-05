@@ -28,7 +28,8 @@ func NewEmbeddedFile(fsys fs.FS, path string) (*Embedded, error) {
 	}
 
 	ext := strings.ToLower(filepath.Ext(path))
-	translations := make(map[string]string)
+	// Use a generic map to support either string values or plural objects
+	translations := make(map[string]interface{})
 
 	switch ext {
 	case ".json":
@@ -45,7 +46,34 @@ func NewEmbeddedFile(fsys fs.FS, path string) (*Embedded, error) {
 
 	m := NewMap()
 	for k, v := range translations {
-		m.Add(k, v)
+		switch tv := v.(type) {
+		case string:
+			m.Add(k, tv)
+		case map[string]interface{}:
+			singular := ""
+			plural := ""
+			if s, ok := tv["singular"].(string); ok {
+				singular = s
+			}
+			if s, ok := tv["s"].(string); ok {
+				singular = s
+			}
+			if p, ok := tv["plural"].(string); ok {
+				plural = p
+			}
+			if p, ok := tv["p"].(string); ok {
+				plural = p
+			}
+			if singular != "" || plural != "" {
+				if plural == "" {
+					m.Add(k, singular)
+				} else {
+					m.AddPlural(k, singular, plural)
+				}
+			}
+		default:
+			// ignore unsupported types
+		}
 	}
 	return &Embedded{m: m}, nil
 }
@@ -56,4 +84,8 @@ func (e *Embedded) Translate(key string) string {
 
 func (e *Embedded) TranslateWith(key string, args map[string]interface{}) string {
 	return e.m.TranslateWith(key, args)
+}
+
+func (e *Embedded) TranslatePlural(key string, number int64, args map[string]interface{}) string {
+	return e.m.TranslatePlural(key, number, args)
 }

@@ -36,4 +36,18 @@ func TestEmbeddedYAML(t *testing.T) {
 	if val := tr.TranslateWith("hello_name_a696", Args("name", "Jane")); val != "Hello Jane" {
 		t.Error("Arg YAML translation failed, got " + val)
 	}
+
+	if val := tr.TranslatePlural("qty_bag_s_full_19772c_17", 1, nil); val != "1 bag full" {
+		t.Error("Plural YAML translation (singular) failed, got " + val)
+	}
+	if val := tr.TranslatePlural("qty_bag_s_full_19772c_17", 2, nil); val != "2 bags full" {
+		t.Error("Plural YAML translation (plural) failed, got " + val)
+	}
+
+	if val := tr.TranslatePlural("qty_cat_s_c712", 1, nil); val != "1 cat" {
+		t.Error("Plural YAML translation (singular) failed, got " + val)
+	}
+	if val := tr.TranslatePlural("qty_cat_s_c712", 2, nil); val != "2 cats" {
+		t.Error("Plural YAML translation (plural) failed, got " + val)
+	}
 }

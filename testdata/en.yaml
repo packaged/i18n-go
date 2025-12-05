@@ -1,2 +1,6 @@
 hello_world_b10a: Hello World
 hello_name_a696: 'Hello {name}'
+qty_bag_s_full_19772c_17: "{qty} bag(s) full"
+qty_cat_s_c712:
+  s: "{qty} cat"
+  p: "{qty} cats"
