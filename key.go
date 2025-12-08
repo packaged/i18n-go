@@ -21,12 +21,15 @@ func Key(input string) string {
 		replaced = input
 	}
 
-	long := len(strings.Fields(input)) > 3
+	re := regexp.MustCompile(`[A-Za-z]+`)
+	long := len(re.FindAllString(input, -1)) > 3
 
 	replaced = strings.ToLower(regexp.MustCompile(`\W+`).ReplaceAllString(strings.TrimSpace(replaced), "_"))
 	if len(replaced) > prefixLength {
 		replaced = strings.ToLower(strings.Trim(replaced[0:prefixLength], "_"))
 	}
+
+	replaced = strings.Trim(replaced, "_")
 
 	hash := md5.Sum([]byte(input))
 	md5Hash := fmt.Sprintf("%x", hash)
