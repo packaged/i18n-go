@@ -1,4 +1,4 @@
-package translate
+package i18n
 
 import (
 	"os"

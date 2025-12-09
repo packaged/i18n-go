@@ -8,4 +8,5 @@ require (
 	github.com/alexsergivan/transliterator v1.0.1 // indirect
 	github.com/gorilla/schema v1.4.1 // indirect
 	github.com/packaged/helpers-go v0.0.0-20251202110759-284b6f76f045 // indirect
+	golang.org/x/text v0.32.0 // indirect
 )

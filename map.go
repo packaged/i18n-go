@@ -1,4 +1,4 @@
-package translate
+package i18n
 
 // entry represents a translation record that can contain singular and plural forms.
 type entry struct {

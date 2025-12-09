@@ -1,4 +1,4 @@
-package translate
+package i18n
 
 func Args(args ...interface{}) map[string]interface{} {
 	res := make(map[string]interface{})

@@ -1,4 +1,4 @@
-package translate
+package i18n
 
 type Translator interface {
 	Translate(key string) string
