@@ -1,4 +1,4 @@
-module github.com/packaged/i18n
+module github.com/packaged/i18n-go
 
 go 1.25.2
 
