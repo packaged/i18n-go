@@ -25,7 +25,7 @@ func Key(input string) string {
 	long := len(re.FindAllString(input, -1)) > 3
 
 	// This doesn't prepend an underscore as the PHP implementation does
-	// To keep compatibility, we use a prefixLength is 29 instead of 30
+	// To keep compatibility, we use a prefixLength of 29 instead of 30
 	replaced = strings.ToLower(regexp.MustCompile(`\W+`).ReplaceAllString(strings.TrimSpace(replaced), "_"))
 	if len(replaced) > prefixLength {
 		replaced = strings.ToLower(strings.Trim(replaced[0:prefixLength], "_"))
