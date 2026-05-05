@@ -2,7 +2,7 @@ package i18n
 
 import "strings"
 
-func EnPlural(singular string) string {
+func ENQPlural(singular string) string {
 	if strings.HasSuffix(singular, "y") {
 		return strings.TrimSuffix(singular, "y") + "ies"
 	}
