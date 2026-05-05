@@ -32,6 +32,11 @@ func (c *Catalog) GetTranslator(language language.Tag) Translator {
 	return c.Languages[language.String()]
 }
 
+// TranslateList translates each key for the given language and joins the results as a localized list.
+func (c *Catalog) TranslateList(language language.Tag, keys []string) string {
+	return TranslatedList(language, c.GetTranslator(language), keys)
+}
+
 func (c *Catalog) Quick(language language.Tag) QuickAdd {
 	return QuickAdd{c: c, lang: language}
 }
