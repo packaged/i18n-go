@@ -489,7 +489,10 @@ func BCP47(country, lang string) language.Tag {
 	c := strings.ToUpper(strings.TrimSpace(country))
 	l := strings.ToLower(strings.TrimSpace(lang))
 
-	if cached, ok := cachedLocale[c+l]; ok {
+	cacheLock.RLock()
+	cached, ok := cachedLocale[c+l]
+	cacheLock.RUnlock()
+	if ok {
 		return cached
 	}
 
@@ -513,7 +516,7 @@ func BCP47(country, lang string) language.Tag {
 	return language.AmericanEnglish
 }
 
-var cacheLock sync.Mutex
+var cacheLock sync.RWMutex
 var cachedLocale = map[string]language.Tag{
 	"enGB": language.BritishEnglish,
 	"enUS": language.AmericanEnglish,
